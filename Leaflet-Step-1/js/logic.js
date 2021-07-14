@@ -21,9 +21,6 @@ var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/
 // 4.) use D3.json to read in data from API URL
 d3.json(earthquake_url).then(function(response) {
 
-    // console.log(response);
-    // console.log(response.features[0].geometry.coordinates[2]);
-
     // 4a.) Define function to determine color based on depth of earthquake
     // Color scale (lightest - darkest)
     // #a4f600, #dcf400, #f7db11, #fdb72a, #fca35d, #ff5f64
@@ -50,9 +47,8 @@ d3.json(earthquake_url).then(function(response) {
     }
 
     // 4c.) Create markers based on leaflet geoJSON object 
-    L.geoJSON(response, {
+    geojson = L.geoJSON(response, {
         pointToLayer: function (feature, latlng) {
-            console.log(feature);
             return L.circleMarker(latlng, {radius: returnRadius(feature.properties.mag), 
                 fillOpacity: 1, 
                 color: 'black', 
@@ -64,6 +60,37 @@ d3.json(earthquake_url).then(function(response) {
         layer.bindPopup(`Place: ${feature.properties.place}<br>Magnitude: ${feature.properties.mag}<br>Depth:${feature.geometry.coordinates[2]}`);
       }
     }).addTo(myMap);
+
+    // 4d.) Set up the legend
+    var legend = L.control({ position: "bottomright" });
+    legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "info legend"); //info legend are the class names that you are assigning to the DIV
+        // var limits = geojson.options.limits;
+        // var colors = geojson.options.colors;
+        // var labels = [];
+
+        var limits = ['-10-10','10-30','30-50','50-70','70-90','90+'];
+        var colors = ['#a4f600', '#dcf400', '#f7db11', '#fdb72a', '#fca35d', '#ff5f64']
+        var labels = [];
+
+        // Add min & max
+        var legendInfo = "<div class=\"labels\"></div>";
+            // "<div class=\"min\">" + limits[0] + "</div>" +
+            // "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+          //"</div>";
+    
+        div.innerHTML = legendInfo;
+    
+        limits.forEach(function(limit, index) {
+          labels.push(`<br><li style=\"background-color: ${colors[index]}\"></li><span>${limit}</span>`);
+        });
+    
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        return div;
+      };
+    
+      // Adding legend to the map
+      legend.addTo(myMap);
 
     // // 4a.) Loop through response dataset returned and add circles
     // for (var i = 0; i < response.length; i++) {
