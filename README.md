@@ -12,6 +12,7 @@ The final product ends up looking like the following:
 ![output](images/sample_output.png)
 
 Tooltips were also added to display the location of the event, and exact magnitude/depth values. An example tooltip is shown below:
+
 ![tooltip](images/sample_tooltip.png)
 
 **NOTE:** To render the map properly, a mapbox api key must be obtained (free). This key is stored in a file called *config.js* in a variable called *API_KEY*. This file has not been pushed to the repository for privacy reasons (listed in .gitignore file). 
