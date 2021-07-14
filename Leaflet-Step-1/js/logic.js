@@ -40,17 +40,20 @@ d3.json(earthquake_url).then(function(response) {
         } else if (depthValue <= 90) {
             return "#fca35d";
         } else {
-            return "#ff5f64"
+            return "#ff5f64";
         }
     }
     
-    
+    // 4b.) Define function to determine radius of circle markers based on magitude of earthquake
+    function returnRadius(magnitudeValue) {
+        return magnitudeValue * 5;
+    }
 
     // Create 
     L.geoJSON(response, {
         pointToLayer: function (feature, latlng) {
             console.log(feature);
-            return L.circleMarker(latlng, {radius: 8, 
+            return L.circleMarker(latlng, {radius: returnRadius(feature.properties.mag), 
                 fillOpacity: 1, 
                 color: 'black', 
                 fillColor: returnColor(feature.geometry.coordinates[2]), 
