@@ -65,9 +65,6 @@ d3.json(earthquake_url).then(function(response) {
     var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend"); //info legend are the class names that you are assigning to the DIV
-        // var limits = geojson.options.limits;
-        // var colors = geojson.options.colors;
-        // var labels = [];
 
         var limits = ['-10-10','10-30','30-50','50-70','70-90','90+'];
         var colors = ['#a4f600', '#dcf400', '#f7db11', '#fdb72a', '#fca35d', '#ff5f64']
@@ -75,9 +72,6 @@ d3.json(earthquake_url).then(function(response) {
 
         // Add min & max
         var legendInfo = "<div class=\"labels\"></div>";
-            // "<div class=\"min\">" + limits[0] + "</div>" +
-            // "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-          //"</div>";
     
         div.innerHTML = legendInfo;
     
@@ -91,16 +85,5 @@ d3.json(earthquake_url).then(function(response) {
     
       // Adding legend to the map
       legend.addTo(myMap);
-
-    // // 4a.) Loop through response dataset returned and add circles
-    // for (var i = 0; i < response.length; i++) {
-        
-    //     var location = response[i].location;
-    
-    //     if (location) {
-    //       L.marker([location.coordinates[1], location.coordinates[0]]).addTo(myMap);
-    //     }
-    //   }
-
 
 });
