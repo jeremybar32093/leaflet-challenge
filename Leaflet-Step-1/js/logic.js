@@ -49,7 +49,7 @@ d3.json(earthquake_url).then(function(response) {
         return magnitudeValue * 5;
     }
 
-    // Create 
+    // 4c.) Create markers based on leaflet geoJSON object 
     L.geoJSON(response, {
         pointToLayer: function (feature, latlng) {
             console.log(feature);
@@ -58,7 +58,11 @@ d3.json(earthquake_url).then(function(response) {
                 color: 'black', 
                 fillColor: returnColor(feature.geometry.coordinates[2]), 
                 weight: 1,});
-        }
+        },
+        // Binding a pop-up to each layer
+        onEachFeature: function(feature, layer) {
+        layer.bindPopup(`Place: ${feature.properties.place}<br>Magnitude: ${feature.properties.mag}<br>Depth:${feature.geometry.coordinates[2]}`);
+      }
     }).addTo(myMap);
 
     // // 4a.) Loop through response dataset returned and add circles
